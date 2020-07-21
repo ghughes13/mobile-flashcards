@@ -1,6 +1,5 @@
 const deckStateModifier = (state = Object.values(require('../flashCardData.json')), action) => {
     action.text ? state = action.text : state
-    console.log(state);
     switch (action.type) {
         case "CREATE_DECK":
             return state

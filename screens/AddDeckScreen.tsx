@@ -8,18 +8,25 @@ import { createDeck } from "../actions/deckActions"
 export default function TabTwoScreen({ navigation }) {
 
   const [text, setText] = useState('')
+  const [showErr, setShowErr] = useState(false)
   const dispatch = useDispatch();
   let arrData = useSelector((state) => state.decks)
 
   let addDeck = () => {
+    if(text.length > 1) {
     dispatch(createDeck(arrData, text))
-    navigation.navigate('AllDecksScreen')
+    setShowErr(false)
+    navigation.navigate('DeckScreen', { deckTitle : text })
+    } else {
+      setShowErr(true)
+    }
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>New Deck Title:</Text>
       <TextInput style={styles.input} placeholder="New deck title..." onChangeText={(text) => setText(text)} />
+      {showErr ? <Text style={styles.error}>Deck name cannot be blank.</Text> : <Text></Text>}
       <TouchableOpacityBtn btnText="Add Deck" onPress={addDeck} />
     </View>
   );
@@ -49,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 10,
   },
-  btn: {
-    
+  error: {
+    color: 'red'
   }
 });

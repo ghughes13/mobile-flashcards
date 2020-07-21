@@ -9,28 +9,33 @@ export default function AddNewCard({ route, navigation }) {
 
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
-  
+  const [showErr, setShowErr] = useState(false)
+
   let { currentDeckTitle } = route.params
 
   const dispatch = useDispatch();
   let deckState = useSelector((state) => state.decks)
 
   let addCard = () => {
-    for(let i = 0; i < deckState.length; i++ ) {
-        if(deckState[i].title === currentDeckTitle) {
-            if(deckState[i].hasOwnProperty('questions')) {
-                deckState[i].questions.push({"question" : question, "answer" : answer})
-                deckState[i].questionLen += 1
-            } else {
-                deckState[i].questions = [{"question" : question, "answer" : answer}]
-                deckState[i].questionLen = 1
-            }
-        }
+    if(question.length > 1 && answer.length > 1) {
+      for(let i = 0; i < deckState.length; i++ ) {
+          if(deckState[i].title === currentDeckTitle) {
+              if(deckState[i].hasOwnProperty('questions')) {
+                  deckState[i].questions.push({"question" : question, "answer" : answer})
+                  deckState[i].questionLen += 1
+              } else {
+                  deckState[i].questions = [{"question" : question, "answer" : answer}]
+                  deckState[i].questionLen = 1
+              }
+          }
+      }
+      
+      dispatch(addCardToDeck(deckState))
+      setShowErr(true)
+      navigation.navigate('DeckScreen');
+    } else {
+      setShowErr(true)
     }
-    
-    dispatch(addCardToDeck(deckState))
-    // route.params.updateCardNumber()
-    navigation.navigate('DeckScreen');
   }
   
   return (
@@ -39,6 +44,7 @@ export default function AddNewCard({ route, navigation }) {
       <TextInput style={styles.input} placeholder="New deck title..." onChangeText={(text) => setQuestion(text)} />
       <Text style={styles.title}>New Answer:</Text>
       <TextInput style={styles.input} placeholder="New deck title..." onChangeText={(text) => setAnswer(text)} />
+      {showErr ? <Text style={styles.error}>Question or answer cannot be blank.</Text> : <Text></Text>}
       <TouchableOpacityBtn btnText="Add New Question" onPress={addCard} />
     </View>
   );
@@ -53,6 +59,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginTop: 10,
   },
   separator: {
     marginVertical: 30,
@@ -66,4 +73,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 15,
   },
+  error: {
+    color: 'red',
+    marginTop: 10,
+  }
 });

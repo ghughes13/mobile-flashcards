@@ -7,8 +7,6 @@ import DeckItem from "../components/DeckItem"
 export default function TabOneScreen({ navigation }) {
   
   let arrData = useSelector((state) => state.decks)
-
-  console.log('reup')
   
   return (
     <View style={styles.container}>

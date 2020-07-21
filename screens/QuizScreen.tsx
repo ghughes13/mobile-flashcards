@@ -17,12 +17,10 @@ export default function QuizScreen({ route, navigation }) {
     const [showScore, setShowScore] = useState(false)
 
     const nextQuestion = () => {
-        console.log(questionNumber)
         if((currentDeck.questions.length - 1) == questionNumber) {
             setShowScore(true)
         } else {
             setQuestionNumber(questionNumber + 1)
-            console.log(questionNumber)
             setCurrentlyShowing("question")
             setCurrentQuestion(currentDeck.questions[questionNumber+1].question)
             setCurrentAnswer(currentDeck.questions[questionNumber+1].answer)

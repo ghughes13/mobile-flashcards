@@ -6,6 +6,8 @@ import { Text, View } from '../components/Themed';
 import TouchableOpacityBtn from "../components/TouchableOpacityBtn"
 import { deleteDeck } from "../actions/deckActions"
 
+import { setLocalNotification, clearLocalNotifications } from "../helpers/notify.js"
+
 export default function SingleDeckView({ route, navigation}) {
 
   let { deckTitle } = route.params
@@ -15,6 +17,8 @@ export default function SingleDeckView({ route, navigation}) {
   const [currentDeck, setCurrentDeck] = useState('');
 
   useEffect(() => {
+    clearLocalNotifications()
+    setLocalNotification()
       for(let i = 0; i < deckState.length; i++) {
         if(deckState[i].title === deckTitle) {
           setCurrentDeck(deckState[i]);
@@ -38,7 +42,7 @@ export default function SingleDeckView({ route, navigation}) {
       <TouchableOpacityBtn btnText="Take Quiz" onPress={() => navigation.navigate('QuizScreen', { currentDeck : currentDeck})}/>
       <TouchableOpacityBtn btnText="Add Card" onPress={() => navigation.navigate('AddCardScreen', { currentDeckTitle : deckTitle })}/> 
       <TouchableOpacityBtn btnText="Delete Deck" onPress={delDeck}/>
-      <TouchableOpacity onPress={() => navigation.navigate('AllDecksScreen')}><Text>Click Me</Text></TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('AllDecksScreen')}><Text>Go Back</Text></TouchableOpacity>
     </View>
   );
 }
