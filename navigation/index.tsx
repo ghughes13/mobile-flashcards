@@ -10,6 +10,7 @@ import LinkingConfiguration from './LinkingConfiguration';
 import DeckScreen from "../screens/DeckScreen"
 import AddCardScreen from "../screens/AddCardScreen"
 import QuizScreen from "../screens/QuizScreen"
+import { setLocalNotification } from "../helpers/notify"
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -24,7 +25,9 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-
+  useEffect(() => {
+    setLocalNotification();
+  })
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />

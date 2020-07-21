@@ -6,8 +6,6 @@ import { Text, View } from '../components/Themed';
 import TouchableOpacityBtn from "../components/TouchableOpacityBtn"
 import { deleteDeck } from "../actions/deckActions"
 
-import { setLocalNotification, clearLocalNotifications } from "../helpers/notify.js"
-
 export default function SingleDeckView({ route, navigation}) {
 
   let { deckTitle } = route.params
@@ -17,8 +15,6 @@ export default function SingleDeckView({ route, navigation}) {
   const [currentDeck, setCurrentDeck] = useState('');
 
   useEffect(() => {
-    clearLocalNotifications()
-    setLocalNotification()
       for(let i = 0; i < deckState.length; i++) {
         if(deckState[i].title === deckTitle) {
           setCurrentDeck(deckState[i]);
