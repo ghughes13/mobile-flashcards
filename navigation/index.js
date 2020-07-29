@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, Button, Platform, ColorSchemeName} from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList } from '../types';
+// import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
 import DeckScreen from "../screens/DeckScreen"
@@ -12,7 +12,7 @@ import AddCardScreen from "../screens/AddCardScreen"
 import QuizScreen from "../screens/QuizScreen"
 import { setLocalNotification } from "../helpers/notify"
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation({ colorScheme }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
@@ -22,12 +22,13 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   );
 }
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator();
 
 function RootNavigator() {
   useEffect(() => {
     setLocalNotification();
   })
+  
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={BottomTabNavigator} />

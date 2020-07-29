@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Text, View } from './Themed';
 
-export default function TouchableOpacityBtn({ btnText, onPress}: { btnText: 'string', onPress : 'any' }) {
+export default function TouchableOpacityBtn({ btnText, onPress}) {
   return (
     <TouchableOpacity style={styles.btn} onPress={onPress}> 
         <Text>{btnText}</Text>
